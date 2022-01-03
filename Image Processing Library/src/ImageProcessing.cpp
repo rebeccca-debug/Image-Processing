@@ -73,7 +73,7 @@ void ImageProcessing::writeImage(){
    fclose(fo);
 }
 
-void ImageProcessing ::copyImgData(unsigned char *_srcBuf, unsigned char *_destBuf, int bufSize)
+void ImageProcessing::copyImgData(unsigned char *_srcBuf, unsigned char *_destBuf, int bufSize)
 {
     for(int i =0;i<bufSize;i++)
     {

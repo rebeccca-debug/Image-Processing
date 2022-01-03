@@ -100,6 +100,67 @@ void ImageProcessing::brightnessDown(unsigned char *_inputImgData, unsigned char
      }
 }
 
+void ImageProcessing::computeHistogram(unsigned char * _imgData, int imgRows, int imgCols, float hist[],const char *histFile)
+{
+    FILE *fptr;
+    fptr =fopen(histFile,"w");
+
+    int x,y,i,j;
+    long int ihist[255],sum;
+    for(i =0;i<=255;i++)
+    {
+        ihist[i] =0;
+    }
+    sum =0;
+    for(y=0;y<imgRows;y++)
+    {
+        for(x=0;x<imgCols;x++)
+        {
+            j = *(_imgData+x+y*imgCols);
+            ihist[j] = ihist[j] +1;
+            sum = sum+1;
+        }
+
+    }
+    for(i=0;i<255;i++)
+        hist[i] =  (float)ihist[i]/(float)sum;
+  for(int i=0;i<255;i++)
+    {
+        fprintf(fptr,"\n%f",hist[i]);
+    }
+    fclose(fptr);
+}
+
+void ImageProcessing::equalizeHistogram(unsigned char * _inputImgData, unsigned char * _outputImgData, int imgRows, int imgCols)
+{
+    int x,y,i,j;
+    int histeq[256];
+    float hist[256];
+    float sum ;
+
+    const char initHist[] ="init_hist.txt";
+    const char finalHist[] = "final_hist.txt";
+
+    computeHistogram(&_inputImgData[0],imgRows,imgCols,&hist[0],initHist);
+    for(i =0;i<=255;i++)
+    {
+        sum =0.0;
+        for(j=0;j<=i;j++){
+            sum = sum+hist[j];
+        }
+        histeq[i] =  (int)(255*sum+0.5);
+
+    }
+    for(y =0;y<imgRows;y++)
+    {
+        for(x=0;x<imgCols;x++)
+        {
+            *(_outputImgData+x+y*imgCols) = histeq[*(_inputImgData+x+y*imgCols)];
+        }
+    }
+    computeHistogram(&_outputImgData[0], imgRows,imgCols,&hist[0],finalHist);
+}
+
 ImageProcessing::~ImageProcessing()
 {
     //dtor

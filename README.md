@@ -1,4 +1,4 @@
-# Image Processing with C/C++
+# Image Processing
 
 Contents
 Image processing library

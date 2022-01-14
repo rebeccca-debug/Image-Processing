@@ -81,7 +81,7 @@ void ImageProcessing::writeImage(){
 }
 
 /**
- * @brief Iterating through the pixelized image and copying it to its destination.
+ * @brief Iterating through the image and copying it to its destination.
  * @param _srcBuf source buffer array pointer of image pixels
  * @param _destBuf destination buffer array pointer of image pixels
  * @param bufSize integer representing size of source array
@@ -95,6 +95,14 @@ void ImageProcessing ::copyImgData(unsigned char *_srcBuf, unsigned char *_destB
     }
 }
 
+/**
+ * @brief Iterating through the image and removing color from the image.
+ * @param _inImgData - char pointer to input image data
+ * @param _outImgData - char pointer to output image data
+ * @param imgSize - integer representing size of source array
+ * @param threshold - integer representing threshold between what's considered white or black
+ * @return void
+*/
 void ImageProcessing::binarizeImage(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int threshold)
 {
     for(int i=0;i<imgSize;i++)
@@ -102,7 +110,8 @@ void ImageProcessing::binarizeImage(unsigned char *_inImgData, unsigned char *_o
         _outImgData[i] =  (_inImgData[i] > threshold) ? WHITE :BLACK;
     }
 }
-void ImageProcessing::brightnessUp(unsigned char *_inputImgData, unsigned char *_outImgData, int imgSize, int brightness)
+
+void ImageProcessing::brightnessUp(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int brightness)
 {
 
     for(int i =0;i<imgSize;i++)

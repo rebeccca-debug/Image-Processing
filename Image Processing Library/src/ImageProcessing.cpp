@@ -80,13 +80,13 @@ void ImageProcessing::writeImage(){
    fclose(fo);
 }
 
-    /**
-    * @brief Iterating through the pixelized image and copying it to its destination.
-    * @param _srcBuf source buffer array pointer of image pixels
-    * @param _destBuf destination buffer array pointer of image pixels
-    * @param bufSize integer representing size of source array
-    * @return void
-    */
+/**
+ * @brief Iterating through the pixelized image and copying it to its destination.
+ * @param _srcBuf source buffer array pointer of image pixels
+ * @param _destBuf destination buffer array pointer of image pixels
+ * @param bufSize integer representing size of source array
+ * @return void
+*/
 void ImageProcessing ::copyImgData(unsigned char *_srcBuf, unsigned char *_destBuf, int bufSize)
 {
     for(int i =0;i<bufSize;i++)

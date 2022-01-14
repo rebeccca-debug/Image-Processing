@@ -148,31 +148,44 @@ void ImageProcessing::brightnessDown(unsigned char *_inputImgData, unsigned char
      }
 }
 
+/**
+ * @brief Computing the histogram representation of the image given.
+ * @param _inImgData - char pointer to input image data
+ * @param _outImgData - char pointer to output image data
+ * @param imgSize - integer representing size of source array
+ * @param brightness - integer representing brightness to up the image.
+ * @return void
+*/
 void ImageProcessing::computeHistogram(unsigned char * _imgData, int imgRows, int imgCols, float hist[])
 {
     FILE *fptr;
     fptr =fopen("image_hist.txt","w");
 
     int x,y,i,j;
+    // create temporary histogram, sum variable
     long int ihist[255],sum;
+    //fill temporary histogram with zeros
     for(i =0;i<=255;i++)
     {
         ihist[i] =0;
     }
-    sum =0;
-    for(y=0;y<imgRows;y++)
+    // sum of pixels
+    sum=0;
+    for(x=0;x<imgRows;y++)
     {
-        for(x=0;x<imgCols;x++)
+        for(y=0;y<imgCols;x++)
         {
-            j = *(_imgData+x+y*imgCols);
+            j = *(_imgData+y+x*imgCols);
             ihist[j] = ihist[j] +1;
             sum = sum+1;
         }
 
     }
+    // create the histogram of pixel colors
     for(i=0;i<255;i++)
         hist[i] =  (float)ihist[i]/(float)sum;
-  for(int i=0;i<255;i++)
+    // print the histogram
+    for(int i=0;i<255;i++)
     {
         fprintf(fptr,"\n%f",hist[i]);
     }

@@ -30,7 +30,7 @@ ImageProcessing::ImageProcessing(
 }
 
 /**
- * @brief Read in an image from the file given.
+ * @brief Read in an image from an input file.
  * @returns void
  */
 void ImageProcessing::readImage()
@@ -63,6 +63,10 @@ void ImageProcessing::readImage()
     fclose(streamIn);
 }
 
+/**
+ * @brief Write an image to a 512x512 .bmp file.
+ * @returns void
+ */
 void ImageProcessing::writeImage(){
 
     FILE  *fo = fopen(outImgName,"wb");
@@ -76,6 +80,13 @@ void ImageProcessing::writeImage(){
    fclose(fo);
 }
 
+    /**
+    * @brief Iterating through the pixelized image and copying it to its destination.
+    * @param _srcBuf source buffer array pointer of image pixels
+    * @param _destBuf destination buffer array pointer of image pixels
+    * @param bufSize integer representing size of source array
+    * @return void
+    */
 void ImageProcessing ::copyImgData(unsigned char *_srcBuf, unsigned char *_destBuf, int bufSize)
 {
     for(int i =0;i<bufSize;i++)

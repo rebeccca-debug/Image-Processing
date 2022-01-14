@@ -150,10 +150,10 @@ void ImageProcessing::brightnessDown(unsigned char *_inputImgData, unsigned char
 
 /**
  * @brief Computing the histogram representation of the image given.
- * @param _inImgData - char pointer to input image data
- * @param _outImgData - char pointer to output image data
- * @param imgSize - integer representing size of source array
- * @param brightness - integer representing brightness to up the image.
+ * @param _imgData - char pointer to image data
+ * @param imgRows - integer representing number of image rows
+ * @param imgCols - integer representing number of image cols
+ * @param hist - float array representing histogram
  * @return void
 */
 void ImageProcessing::computeHistogram(unsigned char * _imgData, int imgRows, int imgCols, float hist[])

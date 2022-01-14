@@ -29,7 +29,10 @@ ImageProcessing::ImageProcessing(
     outBuf     = _outBuf;
 }
 
-
+/**
+ * @brief Read in an image from the file given.
+ * @returns void
+ */
 void ImageProcessing::readImage()
 {
 

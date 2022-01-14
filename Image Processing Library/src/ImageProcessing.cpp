@@ -111,16 +111,34 @@ void ImageProcessing::binarizeImage(unsigned char *_inImgData, unsigned char *_o
     }
 }
 
+/**
+ * @brief Making the image brighter. Iterating through the image, setting a temp variable to the pixel+the brightness. 
+ *        If the temporary pixel is more than the maximum color, set the maximum color equal to temp.
+ * @param _inImgData - char pointer to input image data
+ * @param _outImgData - char pointer to output image data
+ * @param imgSize - integer representing size of source array
+ * @param brightness - integer representing brightness to up the image.
+ * @return void
+*/
 void ImageProcessing::brightnessUp(unsigned char *_inImgData, unsigned char *_outImgData, int imgSize, int brightness)
 {
 
     for(int i =0;i<imgSize;i++)
     {
         int temp = _inputImgData[i]+ brightness;
-        _outImgData[i] =  (temp > MAX_COLOR)? MAX_COLOR :temp;
+        _outImgData[i] =  (temp > MAX_COLOR) ? MAX_COLOR :temp;
     }
 }
 
+/**
+ * @brief Making the image darker. Iterating through the image, setting a temp variable to the pixel+the darkness. 
+ *        If the temporary pixel is less than the minimum color, set the minimum color equal to temp.
+ * @param _inImgData - char pointer to input image data
+ * @param _outImgData - char pointer to output image data
+ * @param imgSize - integer representing size of source array
+ * @param brightness - integer representing brightness to up the image.
+ * @return void
+*/
 void ImageProcessing::brightnessDown(unsigned char *_inputImgData, unsigned char *_outImgData, int imgSize, int darkness)
 {
      for(int i =0;i<imgSize;i++)

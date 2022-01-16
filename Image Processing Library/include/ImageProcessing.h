@@ -127,6 +127,9 @@ class ImageProcessing
         void setMask(int mskRows, int mskCols, const int mskData[]);
         void generateGaussNoise(unsigned char*_inputImgData, int imgCols, int imgRows, float var, float mean);
         void saltAndPepper(unsigned char *_inputImgData, int imgCols, int imgRows, float prob);
+        void maximumFilter(unsigned char *_inputImgData, unsigned char *_outputImgData, int imgCols,int imgRows);
+        void medianFilter(unsigned char *_inputImgData, unsigned char *_outputImgData, int imgCols, int imgRows);
+        void minimumFilter(unsigned char *_inputImgData, unsigned char *_outputImgData, int imgCols, int imgRows);
 
         virtual ~ImageProcessing();
 

@@ -192,27 +192,42 @@ void ImageProcessing::computeHistogram(unsigned char * _imgData, int imgRows, in
     fclose(fptr);
 }
 
+/**
+ * @brief Equalize the histogram computed by computeHistogram.
+ * @param _inputImgData - char pointer to input image data
+ * @param _outputImgData - char pointer to output image data
+ * @param imgRows - integer representing image rows
+ * @param imgCols - integer representing image columns
+ * @return void
+*/
 void ImageProcessing::equalizeHistogram(unsigned char * _inputImgData, unsigned char * _outputImgData, int imgRows, int imgCols)
 {
     int x,y,i,j;
     int histeq[256];
     float hist[256];
-    float sum ;
+    float sum;
 
+    // initial histogram
     const char initHist[] ="init_hist.txt";
+    // final histogram
     const char finalHist[] = "final_hist.txt";
 
+    // Compute the initial histogram
     computeHistogram(&_inputImgData[0],imgRows,imgCols,&hist[0],initHist);
-    for(i =0;i<=255;i++)
+  
+    // Iterate through histogram
+    for(i=0;i<=255;i++)
     {
         sum =0.0;
         for(j=0;j<=i;j++){
+            //Add each pixel to sum
             sum = sum+hist[j];
         }
-        histeq[i] =  (int)(255*sum+0.5);
+        histeq[i] = (int)(255*sum+0.5);
 
     }
-    for(y =0;y<imgRows;y++)
+  
+    for(y=0;y<imgRows;y++)
     {
         for(x=0;x<imgCols;x++)
         {

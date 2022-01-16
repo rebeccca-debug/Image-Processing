@@ -3,11 +3,12 @@
 
 int main()
 {
+
    FILE *fIn= fopen("cameraman.bmp","rb");
    FILE *fOut =fopen("cameraman_rotated3.bmp","wb");
    int selected;
 
-   unsigned char imgHeder[54];
+   unsigned char imgHeader[54];
    unsigned char colorTable[1024];
 
    if(fIn == NULL)
@@ -17,12 +18,12 @@ int main()
 
    for(int i =0;i<54;i++)
    {
-       imgHeder[i] = getc(fIn);
+       imgHeader[i] = getc(fIn);
    }
-   fwrite(imgHeder,sizeof(unsigned char),54,fOut);
-   int height = *(int*)&imgHeder[22];
-   int width  =  *(int *)&imgHeder[18];
-   int bitDepth = *(int *)&imgHeder[28];
+   fwrite(imgHeader,sizeof(unsigned char),54,fOut);
+   int height = *(int*)&imgHeader[22];
+   int width  =  *(int *)&imgHeader[18];
+   int bitDepth = *(int *)&imgHeader[28];
 
    if(bitDepth <=8)
    {

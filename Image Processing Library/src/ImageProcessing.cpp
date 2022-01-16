@@ -193,7 +193,7 @@ void ImageProcessing::computeHistogram(unsigned char * _imgData, int imgRows, in
 }
 
 /**
- * @brief Equalize the histogram computed by computeHistogram.
+ * @brief Equalize the histogram computed by computeHistogram. Equalizing the histogram entails adding more contrast to the image.
  * @param _inputImgData - char pointer to input image data
  * @param _outputImgData - char pointer to output image data
  * @param imgRows - integer representing image rows
@@ -227,22 +227,34 @@ void ImageProcessing::equalizeHistogram(unsigned char * _inputImgData, unsigned 
 
     }
   
+    // Iterate through rows and columns
     for(y=0;y<imgRows;y++)
     {
         for(x=0;x<imgCols;x++)
         {
+            //Equalize the array of the equalized histogram
             *(_outputImgData+x+y*imgCols) = histeq[*(_inputImgData+x+y*imgCols)];
         }
     }
+    //compute final histogram for the output image
     computeHistogram(&_outputImgData[0], imgRows,imgCols,&hist[0],finalHist);
 }
 
+/**
+ * @brief Get the negative version of the image.
+ * @param _inImgData - char pointer to input image data
+ * @param _ouImgData - char pointer to output image data
+ * @param imgWidth - integer representing image rows
+ * @param imgHeight - integer representing image columns
+ * @return void
+*/
 void ImageProcessing::getImageNegative(unsigned char *_inImgData, unsigned char * _outImgData,int imgWidth,int imgHeight)
 {
 
     for(int i =0;i<imgHeight;i++)
     {
         for(int j=0;j<imgWidth;j++){
+             //Subtract each pixel from 255
              _outImgData[i*imgWidth+j ]  = 255 - _inImgData[i*imgWidth+j];
         }
     }

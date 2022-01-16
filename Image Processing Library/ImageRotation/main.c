@@ -1,11 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int rotateImage(FILE *fIn, FILE *fOut);
+
 int main()
 {
    // Create input and output files
    FILE *fIn= fopen("cameraman.bmp","rb");
    FILE *fOut =fopen("cameraman_rotated3.bmp","wb");
+   
+   rotateImage(fIn, fOut);
+   return 0;
+}
+
+/**
+ * @brief Rotate image. User inputs their desired direction. Options: left, right, 180.
+ * @param fIn - Input image data
+ * @param fOut - Output image data
+ * @return int
+*/
+int rotateImage(FILE *fIn, FILE *fOut) {
    // Selected rotation direction
    int selected;
 
@@ -27,7 +41,7 @@ int main()
    int width  =  *(int *)&imgHeader[18];
    int bitDepth = *(int *)&imgHeader[28];
 
-   // read from the colorTable in the input, write to the colorTable in the output file
+   // Read from the colorTable in the input, write to the colorTable in the output file
    if(bitDepth <=8)
    {
        fread(colorTable,sizeof(unsigned char),1024,fIn);
@@ -43,7 +57,7 @@ int main()
    // Read from the buffer in the input file
    fread(buffer,sizeof(unsigned char),imgSize,fIn);
 
-
+   // User selects the direction they want the image to rotate in
    printf("Enter rotation direction : \n");
    printf("1  : Rotate right \n");
    printf("2  : Rotate left \n");
@@ -96,5 +110,5 @@ int main()
 
    fclose(fIn);
    fclose(fOut);
-    return 0;
+   return 0;
 }

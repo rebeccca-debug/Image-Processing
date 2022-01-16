@@ -3,7 +3,7 @@
 
 int main()
 {
-
+   //Create input and output files
    FILE *fIn= fopen("cameraman.bmp","rb");
    FILE *fOut =fopen("cameraman_rotated3.bmp","wb");
    int selected;

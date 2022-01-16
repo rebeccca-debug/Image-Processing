@@ -104,7 +104,7 @@ int rotateImage(FILE *fIn, FILE *fOut) {
     break;
    }
 
-   //Write image to the output file buffer
+   // Write image to the output file buffer
    fwrite(out_buffer,sizeof(unsigned char),imgSize,fOut);
    printf("Success !\n");
 

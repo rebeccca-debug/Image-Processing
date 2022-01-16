@@ -3,9 +3,10 @@
 
 int main()
 {
-   //Create input and output files
+   // Create input and output files
    FILE *fIn= fopen("cameraman.bmp","rb");
    FILE *fOut =fopen("cameraman_rotated3.bmp","wb");
+   // Selected rotation direction
    int selected;
 
    unsigned char imgHeader[54];
@@ -16,6 +17,7 @@ int main()
        printf("Unable to open file\n");
    }
 
+   // Copy the header from the input file to imgHeader
    for(int i =0;i<54;i++)
    {
        imgHeader[i] = getc(fIn);
@@ -25,6 +27,7 @@ int main()
    int width  =  *(int *)&imgHeader[18];
    int bitDepth = *(int *)&imgHeader[28];
 
+   // read from the colorTable in the input, write to the colorTable in the output file
    if(bitDepth <=8)
    {
        fread(colorTable,sizeof(unsigned char),1024,fIn);
@@ -37,6 +40,7 @@ int main()
    unsigned char buffer[width][height];
    unsigned char out_buffer[width][height];
 
+   // Read from the buffer in the input file
    fread(buffer,sizeof(unsigned char),imgSize,fIn);
 
 
@@ -49,6 +53,7 @@ int main()
 
    switch(selected)
    {
+   // Rotate right
    case 1:
     for(int i =0;i<width;i++)
     {
@@ -59,6 +64,7 @@ int main()
     }
        break;
 
+   // Rotate left
    case 2:
     for(int i =0;i<width;i++)
     {
@@ -68,6 +74,8 @@ int main()
         }
     }
     break;
+         
+   // Rotate 180
    case 3:
      for(int i=0;i<width;i++)
      {
@@ -77,12 +85,14 @@ int main()
          }
      }
      break;
+   
    default:
     break;
    }
 
+   //Write image to the output file buffer
    fwrite(out_buffer,sizeof(unsigned char),imgSize,fOut);
-    printf("Success !\n");
+   printf("Success !\n");
 
    fclose(fIn);
    fclose(fOut);

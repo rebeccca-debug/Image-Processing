@@ -251,7 +251,7 @@ void ImageProcessing::equalizeHistogram(unsigned char * _inputImgData, unsigned 
 void ImageProcessing::getImageNegative(unsigned char *_inImgData, unsigned char * _outImgData,int imgWidth,int imgHeight)
 {
 
-    for(int i =0;i<imgHeight;i++)
+    for(int i=0;i<imgHeight;i++)
     {
         for(int j=0;j<imgWidth;j++){
              //Subtract each pixel from 255
@@ -260,32 +260,46 @@ void ImageProcessing::getImageNegative(unsigned char *_inImgData, unsigned char 
     }
 }
 
+/**
+ * @brief 2-D Discrete Convolution algorithm. Convolve a mask with the input image to invert the colors and make the edges pronounced.
+ * @param imgRows - integer representing image rows
+ * @param imgCols - integer representing image columns
+ * @param myMask - Mask struct pointer
+ * @param input_buf - input image data
+ * @param output_buf - output image data
+ * @return void
+*/
 void ImageProcessing::Convolve2D(int imgRows, int imgCols, struct Mask *myMask, unsigned char *input_buf, unsigned char *output_buf)
 {
+    // indexes
     long i,j,m,n,idx,jdx;
+    //mask pixel, image pixel, convolved value
     int ms,im,val;
     unsigned char *tmp;
 
-    //the outer summation loop
-    for(i =0;i<imgRows;++i)
-        for(j =0;j<imgCols;++j){
-            val =0;
-            for(m=0;m<myMask->Rows;++m)
-            for(n=0;n<myMask->Cols;++n){
-                ms = (signed char)*(myMask->Data+ m*myMask->Rows+n);
-                idx = i-m;
-                jdx = j-n;
-                if(idx>=0 && jdx >=0)
-                    im = *(input_buf+idx*imgRows+jdx);
-                val +=ms*im;
-        }
-            if(val >255) val =255;
-            if(val <0)val =0;
-            tmp =output_buf + i*imgRows +j;
-            *tmp =(unsigned char)val;
-
+    // Iterating through rows and columns of the image
+    for(i=0;i<imgRows;++i){
+      for(j=0;j<imgCols;++j){
+        val =0;
+        // Iterate through rows and columns of the mask
+        for(m=0;m<myMask->Rows;m++){
+          for(n=0;n<myMask->Cols;n++){
+            ms = (signed char)*(myMask->Data + m*myMask->Rows + n);
+            idx = i-m;
+            jdx = j-n;
+            // if the index is more than 0 after subtracting the mask's index from the image index, the pixel is dark
+            if(idx>=0 && jdx >=0){
+              im = *(input_buf+idx*imgRows+jdx);
+            }
+            val += ms*im;
+          }
+          if(val>255) val=255;
+          if(val<0) val=0;
+          tmp = output_buf + i*imgRows + j;
+          // Set the temp pointer equal to the convolved value
+          *tmp = (unsigned char)val;
+       }
     }
-
 }
 
 void  ImageProcessing::detectLine(unsigned char *_inputImgData, unsigned char *_outputImgData, int imgCols, int imgRows, const int MASK[][3])

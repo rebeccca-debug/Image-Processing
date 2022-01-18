@@ -302,46 +302,68 @@ void ImageProcessing::Convolve2D(int imgRows, int imgCols, struct Mask *myMask, 
     }
 }
 
+/**
+ * @brief Detect lines in an image. Then, invert each line.
+ * @param _inputImgData - char pointer to input image
+ * @param _outputImgData - char pointer to output image
+ * @param imgCols - integer representing image columns
+ * @param imgRows - integer representing image rows
+ * @param Mask - 2d integer array representing line detector mask
+ * @return void
+*/
 void  ImageProcessing::detectLine(unsigned char *_inputImgData, unsigned char *_outputImgData, int imgCols, int imgRows, const int MASK[][3])
 {
-
     int x,y,i,j,sum;
-    for(y=1;y<=imgRows-1;y++)
+  
+    // Iterate through image, invert the lines in the image
+    for(x=1;x<=imgRows-1;x++)
     {
-        for(x=1;x<=imgCols;x++)
+        for(y=1;y<=imgCols;y++)
         {
-            sum =0;
+            sum = 0;
             for(i=-1;i<=1;i++)
             {
                 for(j=-1;j<=1;j++)
                 {
-                    sum = sum + *(_inputImgData+x+i+(long)(y+j)*imgCols)*MASK[i+1][j+1];
+                    // Add each inverted pixel to the sum
+                    sum = sum + *(_inputImgData+y+i+(long)(x+j)*imgCols)*MASK[i+1][j+1];
                 }
             }
-            if(sum >255) sum = 255;
-            if(sum<0)sum =0;
-            *(_outputImgData+x+(long)y*imgCols) =sum ;
+            // Make sure sum is in 8-bit value range
+            if(sum>255) sum = 255;
+            if(sum<0) sum = 0;
+          
+            *(_outputImgData+y+(long)x*imgCols) = sum;
         }
     }
 }
 
+
+/**
+ * @brief Set the desired mask onto the image.
+ * @param mskRows - integer representing mask rows
+ * @param mskCols - integer representing mask columns
+ * @param mskData - integer array representing mask data
+ * @return void
+*/
 void ImageProcessing::setMask(int mskRows, int mskCols, const int mskData[])
 {
-    signed char * tmp;
-    int requiredSize;
+  signed char * tmp;
+  int requiredSize;
 
   myMask.Rows  = mskRows;
   myMask.Cols  = mskCols;
   requiredSize =  myMask.Rows * myMask.Cols;
   myMask.Data =  (unsigned char *)malloc(requiredSize);
 
+  // Temp = pointer to mask data in header file
   tmp = (signed char *)myMask.Data;
 
+  // Iterate through mask data array and set it equal to temp
   for(int i = 0;i<requiredSize;i++)
   {
       *tmp =  mskData[i];
       ++tmp;
-
   }
 
 }

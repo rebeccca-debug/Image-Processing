@@ -412,10 +412,8 @@ void ImageProcessing::saltAndPepper(unsigned char *_inputImgData, int imgCols, i
     for(x=0;x<imgRows;x++){
         for(y=0;y<imgCols;y++) {
             data = rand();
-            // Set pixel to black
             if(data >= 16384 && data< data1)
                 *(_inputImgData+y+(long)x*imgCols) =0;
-            // Set pixel to white
             if(data>=data2&& data<16384)
                 *(_inputImgData+y+(long)x*imgCols) =255;
         }

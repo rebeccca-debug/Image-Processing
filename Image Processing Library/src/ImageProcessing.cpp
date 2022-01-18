@@ -421,7 +421,7 @@ void ImageProcessing::saltAndPepper(unsigned char *_inputImgData, int imgCols, i
 }
 
 /**
- * @brief Adding a  maximum filter to the photo. The photo is sharpened.
+ * @brief Adding a maximum filter to the photo. The photo is sharpened.
  * @param _inputImgData - char pointer to input image
  * @param _outputImgData - char pointer to output image
  * @param imgCols - integer representing image columns
@@ -460,6 +460,15 @@ void ImageProcessing::maximumFilter(unsigned char *_inputImgData, unsigned char 
 
 
 }
+  
+/**
+ * @brief Adding a median filter to the photo. The photo is blurred.
+ * @param _inputImgData - char pointer to input image
+ * @param _outputImgData - char pointer to output image
+ * @param imgCols - integer representing image columns
+ * @param imgRows - integer representing image rows 
+ * @return void
+*/
 void ImageProcessing::medianFilter(unsigned char *_inputImgData, unsigned char *_outputImgData, int imgCols, int imgRows)
 {
    int x, y,i,j,z;
@@ -494,6 +503,14 @@ void ImageProcessing::medianFilter(unsigned char *_inputImgData, unsigned char *
 
 }
 
+/**
+ * @brief Adding a minimum filter to the photo. The photo is darkened.
+ * @param _inputImgData - char pointer to input image
+ * @param _outputImgData - char pointer to output image
+ * @param imgCols - integer representing image columns
+ * @param imgRows - integer representing image rows 
+ * @return void
+*/
 void ImageProcessing::minimumFilter(unsigned char *_inputImgData, unsigned char *_outputImgData, int imgCols, int imgRows)
 {
     int x, y,i,j,smin,n,a[11][11];

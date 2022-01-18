@@ -367,13 +367,22 @@ void ImageProcessing::setMask(int mskRows, int mskCols, const int mskData[])
   }
 
 }
-
-void ImageProcessing::generateGaussNoise(unsigned char*_inputImgData, int imgCols, int imgRows, float var, float mean)
+  
+/**
+ * @brief Generating Gaussian noise from an image. Getting rid of contrast in photos.
+ * @param _inputImgData - char pointer to input image
+ * @param imgCols - integer representing image columns
+ * @param imgRows - integer representing image rows
+ * @param var - integer array representing mask data
+ * @param mean - integer array representing mask data
+ * @return void
+*/
+void ImageProcessing::generateGaussNoise(unsigned char* _inputImgData, int imgCols, int imgRows, float var, float mean)
 {
     int x,y;
     float theta,noise;
-    for(y =0;y<imgRows;y++)
-        for(x=0;x<imgCols;x++)
+    for(x=0;x<imgRows;x++)
+        for(y=0;y<imgCols;y++)
     {
         noise  = sqrt(-2*var*log(1.0-(float)rand()/32767.1));
         theta  =  (float)rand()* 1.9175345e-4 - 3.14159265;
@@ -381,7 +390,7 @@ void ImageProcessing::generateGaussNoise(unsigned char*_inputImgData, int imgCol
         noise =  noise + mean;
         if(noise > 255) noise = 255;
         if(noise< 0) noise =0;
-        *(_inputImgData+x+(long)y*imgCols) = (unsigned char)(noise +0.5);
+        *(_inputImgData+y+(long)x*imgCols) = (unsigned char)(noise +0.5);
     }
 }
 

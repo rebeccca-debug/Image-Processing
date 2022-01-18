@@ -394,19 +394,30 @@ void ImageProcessing::generateGaussNoise(unsigned char* _inputImgData, int imgCo
     }
 }
 
+/**
+ * @brief Adding salt and pepper noise to an image. Each pixel is set to either black or white depending on the vale of the probability variable.
+ * @param _inputImgData - char pointer to input image
+ * @param imgCols - integer representing image columns
+ * @param imgRows - integer representing image rows
+ * @param prob - float representing probability 
+ * @return void
+*/
 void ImageProcessing::saltAndPepper(unsigned char *_inputImgData, int imgCols, int imgRows, float prob) {
     int x,y,data1,data2,data;
     data = (int)(prob*32768/2);
-    data1 = data +16384;
+    data1 = data + 16384;
     data2 =  16384 - data;
 
-    for(y =0;y<imgRows;y++){
-        for(x=0;x<imgCols;x++) {
+    // Iterate through photo
+    for(x=0;x<imgRows;x++){
+        for(y=0;y<imgCols;y++) {
             data = rand();
+            // Set pixel to black
             if(data >= 16384 && data< data1)
-                *(_inputImgData+x+(long)y*imgCols) =0;
+                *(_inputImgData+y+(long)x*imgCols) =0;
+            // Set pixel to white
             if(data>=data2&& data<16384)
-                *(_inputImgData+x+(long)y*imgCols) =255;
+                *(_inputImgData+y+(long)x*imgCols) =255;
         }
     }
 }

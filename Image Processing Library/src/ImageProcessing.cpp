@@ -5,6 +5,21 @@
 
 using namespace std;
 
+/** @class Manipulate images in various ways.
+ *
+ *
+ *
+ *
+ * @param _inImgName char pointer to the input image name
+ * @param _outImgName char pointer to output image name
+ * @param _height integer pointer to height of image
+ * @param _width integer pointer to width of image
+ * @param _bitDepth integer pointer to bit depth
+ * @param _header char pointer to header of image
+ * @param _colorTable char pointer to the color table of the image
+ * @param _inBuf char pointer to input buffer
+ * @param _outBuf char pointer to output buffer
+ */
 ImageProcessing::ImageProcessing(
                                  const char *_inImgName,
                                  const char *_outImgName,
